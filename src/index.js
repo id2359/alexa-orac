@@ -1,18 +1,17 @@
-// testing codeanywhere
-var APP_ID = "myappd";
-var AlexaSkill = require('./AlexaSkill.js');
+'use strict';
+var Alexa = require('alexa-sdk');
+var APP_ID = 'dummyid';
 
-var Orac = function() {
-  AlexaSkill.call(this, APP_ID);
-}
+var handlers = {
+    'HelloWorldIntent': function () {
+        this.emit(':tell', 'Hello World!');
+    }
+ 
+};
 
-Orac.prototype = Object.create(AlexaSkill.prototype);
-Orac.prototype.constructor = Orac;
-
-Orac.prototype.eventHandlers.onSessionStarted = function (sessionStartedRequest, session) {  
-  console.log("Orac onSessionStarted requestId: " + sessionStartedRequest.requestId  + ", sessionId: " + session.sessionId);  
-  + session.sessionId; 
-};  
-
-
-
+exports.handler = function(event, context, callback) {
+    var alexa = Alexa.handler(event, context);
+    alexa.APP_ID = APP_ID;
+    alexa.registerHandlers(handlers);
+    alexa.execute();
+};
